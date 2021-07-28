@@ -8,24 +8,56 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-        <canvas id="canvas" width="100" height="100"></canvas>
+        <canvas  id="canvas"   ></canvas>
+        
+
+	
+
+</canvas>
         <script>
+       
+var mo = function (e) {
+    e.preventDefault();
+};
+function stop() {
+    document.body.style.overflow = 'hidden'; // 隐藏滚动条
+    document.addEventListener("touchmove", mo, {
+        passive: false
+    }); //禁止页面滑动
+}
+//直接默认不让滑动
+stop();
+
+// 允许滑动
+function move(){
+        document.body.style.overflow=''; // 显示滚动条
+        document.removeEventListener("touchmove",mo,{passive:false});       
+}
+
+
+
+
+
+
+
+
+
             let canvas = document.getElementById("canvas");/*通过ID找到canvas*/
             canvas.width = document.documentElement.clientWidth/*宽度编程文档的宽度*/
             canvas.height = document.documentElement.clientHeight/*console.log(document.body.clientWidth)调试的时候用来着*/
             let ctx = canvas.getContext("2d");
             ctx.fillStyle = "black";
+            ctx.strokeStyle = "yellow"
            ctx.lineWidth = 5
            ctx.lineCap = "round"/*之前断点太多 加一个这个就圆了*/
             function drawLine(x1, y1, x2, y2){
                      ctx.beginPath();
                      ctx.moveTo(x1, y1);
                      ctx.lineTo(x2, y2);
-                     ctx.stroke();
-                    
+                     ctx.stroke();    
             }
            
-
+            
             
           
             let painting = false
