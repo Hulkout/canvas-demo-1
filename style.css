@@ -5,7 +5,7 @@
 }
 #canvas {
  /* height: 100vh; 
-  width: 100vw;*/
+  width: 100vw;   vw vh都是CSS的属性HTML不能用*/
   /*border: 1px solid red;  弄好了要把这去掉否则 就会大了*/
   display: block;/*canvas的默认是inline*/
 }

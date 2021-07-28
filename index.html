@@ -14,37 +14,73 @@
             canvas.width = document.documentElement.clientWidth/*宽度编程文档的宽度*/
             canvas.height = document.documentElement.clientHeight/*console.log(document.body.clientWidth)调试的时候用来着*/
             let ctx = canvas.getContext("2d");
-
-            let painting = false
-
-            canvas.onmousedown = () =>{
-                painting = true
+            ctx.fillStyle = "black";
+           ctx.lineWidth = 5
+           ctx.lineCap = "round"/*之前断点太多 加一个这个就圆了*/
+            function drawLine(x1, y1, x2, y2){
+                     ctx.beginPath();
+                     ctx.moveTo(x1, y1);
+                     ctx.lineTo(x2, y2);
+                     ctx.stroke();
+                    
             }
-   
-          ctx.fillStyle = "black";
+           
+
+            
           
-      
-      
+            let painting = false
+            let last/*记录上一次鼠标在哪*/
+
+var isTouchDevice = 'ontouchstart' in document.documentElement
+console.log(isTouchDevice)/*是否支持触屏 如果是就是true 那就按手机走*/
+
+
+if(isTouchDevice){
+            canvas.ontouchstart = (e) =>{
+                  let x = e.touches[0].clientX
+               let y = e.touches[0].clientY
+                last = [x, y]
+            }
+          canvas.ontouchmove = (e) =>{
+               /* console.log(e.touches[0])   一点一点找出来的这个控制XY的 数据 得到clientX*/
+               let x = e.touches[0].clientX
+               let y = e.touches[0].clientY
+            /*   console.log(x,y)
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, 2 * Math.PI, false);
+                ctx.stroke();
+                 ctx.fill()*/
+                  drawLine(last[0], last[1], x, y)
+                  last = [x, y]
+            }
+}else{
+       canvas.onmousedown = (e) =>{
+                painting = true
+                last = [e.clientX, e.clientY] /*第一次按下作为第一个点*/
+            }
             
             canvas.onmousemove = (e) =>{
                 if(painting === true){
                /* console.log(e.clientX)
                 console.log(e.clientY)
                 ctx.fillStyle = "rgb(200,0,0)";填充样式颜色
-                ctx.fillRect (e.clientX - 5, e.clientY - 5, 10, 10);填充样式 矩形  横坐标纵坐标 宽高*/
-                
+                ctx.fillRect (e.clientX - 5, e.clientY - 5, 10, 10);填充样式 矩形  横坐标纵坐标 宽高
                 ctx.beginPath();
                 ctx.arc(e.clientX, e.clientY, 5, 0, 2 * Math.PI, false);
-                ctx.stroke();
-                 ctx.fill()
-                }else{
-                    console.log('什么都不做')
+                ctx.stroke(); 描边
+                 ctx.fill() 填充*/
+                 drawLine(last[0], last[1], e.clientX, e.clientY)
+                  last = [e.clientX, e.clientY]/*每次动要链接上一次和下一次且实时更新*/
                 }
             }
 
               canvas.onmouseup = () =>{
                 painting = false
             }
+}
+
+
+         
    
         </script>
   </body>
