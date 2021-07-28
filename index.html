@@ -5,8 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>画板</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    hi
+    <!-- 我要做的事情是用户点击一个东西，鼠标拖动的时候去干什么 所以要做的第一件事就是要知道他点哪里 
+        所以要监听canvas的onclick事件等  别管什么 先随便像一个做 而不是愣在那里想  -->
+    <div id="canvas"></div>
+    <script>
+        canvas.onclick = (e) => {
+           // console.log(e) 打下面那俩这个就先不用了 //console.log 调试大法  打开网页点击一下在console会出现一个属性 里面有好几对XY 找可能的一个一个试试
+            console.log(e.clientX)
+            console.log(e.clientY)
+            let div = document.createElement('div')//  让文档（网页）创建一个标签    这叫API文档里写好的 当用户在哪点就出现一个圆坨坨 创建一个DIV放在鼠标位置 
+            div.style.position = "absolute"
+            div.style.left = e.clientX + 'px'
+            div.style.top = e.clientY + 'px'
+            // 能成点了 这个就可以拜拜了 div.style.border = '1px solid red'
+            div.style.width = '6px'//因为五像素是一个字符串而不是数字要加引号 五像素不对称 改成6
+            div.style.height = '6px' //这些搞完了 不显示 因为它在内存里 要把它弄到canvas里
+            div.style.marginLeft = '-3px'// 让鼠标点的地方居中与框框
+            div.style.marginTop = '-3px'
+            div.style.borderRadius = '50%'
+            div.style.background = "black"
+            canvas.appendChild(div)   //让canvas添加一个孩子时div
+        }
+    </script>
   </body>
 </html>
