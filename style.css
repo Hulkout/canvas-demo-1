@@ -4,6 +4,8 @@
   box-sizing: border-box;
 }
 #canvas {
-  height: 100vh; /*宽度自动就是百分之百*/
-  border: 1px solid red;
+ /* height: 100vh; 
+  width: 100vw;*/
+  /*border: 1px solid red;  弄好了要把这去掉否则 就会大了*/
+  display: block;/*canvas的默认是inline*/
 }
