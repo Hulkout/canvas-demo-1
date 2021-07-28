@@ -8,27 +8,44 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- 我要做的事情是用户点击一个东西，鼠标拖动的时候去干什么 所以要做的第一件事就是要知道他点哪里 
-        所以要监听canvas的onclick事件等  别管什么 先随便像一个做 而不是愣在那里想  -->
-    <div id="canvas"></div>
-    <script>
-        canvas.onclick = (e) => {
-           // console.log(e) 打下面那俩这个就先不用了 //console.log 调试大法  打开网页点击一下在console会出现一个属性 里面有好几对XY 找可能的一个一个试试
-            console.log(e.clientX)
-            console.log(e.clientY)
-            let div = document.createElement('div')//  让文档（网页）创建一个标签    这叫API文档里写好的 当用户在哪点就出现一个圆坨坨 创建一个DIV放在鼠标位置 
-            div.style.position = "absolute"
-            div.style.left = e.clientX + 'px'
-            div.style.top = e.clientY + 'px'
-            // 能成点了 这个就可以拜拜了 div.style.border = '1px solid red'
-            div.style.width = '6px'//因为五像素是一个字符串而不是数字要加引号 五像素不对称 改成6
-            div.style.height = '6px' //这些搞完了 不显示 因为它在内存里 要把它弄到canvas里
-            div.style.marginLeft = '-3px'// 让鼠标点的地方居中与框框
-            div.style.marginTop = '-3px'
-            div.style.borderRadius = '50%'
-            div.style.background = "black"
-            canvas.appendChild(div)   //让canvas添加一个孩子时div
-        }
-    </script>
+        <canvas id="canvas" width="100" height="100"></canvas>
+        <script>
+            let canvas = document.getElementById("canvas");/*通过ID找到canvas*/
+            canvas.width = document.documentElement.clientWidth/*宽度编程文档的宽度*/
+            canvas.height = document.documentElement.clientHeight/*console.log(document.body.clientWidth)调试的时候用来着*/
+            let ctx = canvas.getContext("2d");
+
+            let painting = false
+
+            canvas.onmousedown = () =>{
+                painting = true
+            }
+   
+          ctx.fillStyle = "black";
+          
+      
+      
+            
+            canvas.onmousemove = (e) =>{
+                if(painting === true){
+               /* console.log(e.clientX)
+                console.log(e.clientY)
+                ctx.fillStyle = "rgb(200,0,0)";填充样式颜色
+                ctx.fillRect (e.clientX - 5, e.clientY - 5, 10, 10);填充样式 矩形  横坐标纵坐标 宽高*/
+                
+                ctx.beginPath();
+                ctx.arc(e.clientX, e.clientY, 5, 0, 2 * Math.PI, false);
+                ctx.stroke();
+                 ctx.fill()
+                }else{
+                    console.log('什么都不做')
+                }
+            }
+
+              canvas.onmouseup = () =>{
+                painting = false
+            }
+   
+        </script>
   </body>
 </html>
